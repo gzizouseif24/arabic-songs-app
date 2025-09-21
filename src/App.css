@@ -37,7 +37,7 @@ body {
 /* App Header - Minimal Design */
 .app-header {
   background: #0a0a0a;
-  padding: 15px;
+  padding: 25px 15px;
   border-bottom: 1px solid #333;
   position: sticky;
   top: 0;
@@ -52,13 +52,13 @@ body {
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
-  gap: 12px;
+  gap: 15px;
 }
 
 .header-logo {
-  height: 60px;
+  height: 80px;
   width: auto;
-  max-width: 200px;
+  max-width: 280px;
   object-fit: contain;
   filter: brightness(1.1);
   transition: all 0.3s ease;
@@ -124,7 +124,7 @@ button:focus-visible {
 /* Mobile Optimizations */
 @media (max-width: 768px) {
   .app-header {
-    padding: 12px;
+    padding: 20px 12px;
   }
   
   .app-header h1 {
@@ -136,18 +136,18 @@ button:focus-visible {
   }
   
   .header-content {
-    gap: 8px;
+    gap: 12px;
   }
   
   .header-logo {
-    height: 50px;
-    max-width: 150px;
+    height: 70px;
+    max-width: 220px;
   }
 }
 
 @media (max-width: 480px) {
   .app-header {
-    padding: 10px;
+    padding: 18px 10px;
   }
   
   .app-header h1 {
@@ -159,8 +159,8 @@ button:focus-visible {
   }
   
   .header-logo {
-    height: 40px;
-    max-width: 120px;
+    height: 60px;
+    max-width: 180px;
   }
 }
 
@@ -242,4 +242,25 @@ button:focus-visible {
 :focus-visible {
   outline: 2px solid #FFD700;
   outline-offset: 2px;
+}
+
+/* Dark and Light Mode Classes */
+.app-dark {
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+.app-light {
+  background: #fafafa;
+  color: #1a1a1a;
+}
+
+.app-header-dark {
+  background: #0a0a0a;
+  border-bottom: 1px solid #333;
+}
+
+.app-header-light {
+  background: #fafafa;
+  border-bottom: 1px solid #ddd;
 }

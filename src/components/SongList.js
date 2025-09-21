@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IoMusicalNote, IoPlay } from 'react-icons/io5';
 
-const SongList = ({ songs, onSongSelect }) => {
+const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   const styles = {
@@ -10,22 +10,9 @@ const SongList = ({ songs, onSongSelect }) => {
       maxWidth: '100%',
       margin: '0 auto',
       minHeight: 'calc(100vh - 180px)',
-      background: '#0a0a0a',
+      background: isDarkMode ? '#0a0a0a' : '#fafafa',
     },
-    title: {
-      textAlign: 'center',
-      color: '#FFD700',
-      fontSize: '1.6rem',
-      fontFamily: '"Cairo", "Amiri", sans-serif',
-      fontWeight: '600',
-      marginBottom: '25px',
-      paddingBottom: '15px',
-      borderBottom: '1px solid #333',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '10px',
-    },
+
     grid: {
       display: 'grid',
       gridTemplateColumns: '1fr',
@@ -33,8 +20,8 @@ const SongList = ({ songs, onSongSelect }) => {
       padding: '5px',
     },
     songCard: {
-      background: '#1a1a1a',
-      border: '1px solid #333',
+      background: isDarkMode ? '#1a1a1a' : '#f0f0f0',
+      border: isDarkMode ? '1px solid #333' : '1px solid #ddd',
       borderRadius: '12px',
       padding: '18px 15px',
       cursor: 'pointer',
@@ -52,9 +39,9 @@ const SongList = ({ songs, onSongSelect }) => {
     },
     songCardHover: {
       transform: 'translateY(-2px)',
-      borderColor: '#FFD700',
-      background: '#1f1f1f',
-      boxShadow: '0 4px 12px rgba(255, 215, 0, 0.15)',
+      borderColor: isDarkMode ? '#FFD700' : '#B8860B',
+      background: isDarkMode ? '#1f1f1f' : '#e8e8e8',
+      boxShadow: `0 4px 12px ${isDarkMode ? 'rgba(255, 215, 0, 0.15)' : 'rgba(184, 134, 11, 0.15)'}`,
     },
     songNumber: {
       position: 'absolute',
@@ -63,8 +50,8 @@ const SongList = ({ songs, onSongSelect }) => {
       width: '24px',
       height: '24px',
       borderRadius: '6px',
-      background: 'rgba(255, 215, 0, 0.1)',
-      color: '#FFD700',
+      background: isDarkMode ? 'rgba(255, 215, 0, 0.1)' : 'rgba(184, 134, 11, 0.1)',
+      color: isDarkMode ? '#FFD700' : '#B8860B',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -75,14 +62,14 @@ const SongList = ({ songs, onSongSelect }) => {
     songTitle: {
       fontSize: '1rem',
       fontWeight: '500',
-      color: '#FFD700',
+      color: isDarkMode ? '#FFD700' : '#B8860B',
       marginBottom: '6px',
       fontFamily: '"Cairo", "Amiri", sans-serif',
       lineHeight: '1.3',
     },
     artistName: {
       fontSize: '0.85rem',
-      color: '#999',
+      color: isDarkMode ? '#999' : '#666',
       fontFamily: '"Cairo", sans-serif',
       fontWeight: '400',
     },
@@ -90,7 +77,7 @@ const SongList = ({ songs, onSongSelect }) => {
       position: 'absolute',
       top: '8px',
       right: '8px',
-      color: '#FFD700',
+      color: isDarkMode ? '#FFD700' : '#B8860B',
       opacity: 0,
       transition: 'opacity 0.2s ease',
     },
@@ -106,11 +93,7 @@ const SongList = ({ songs, onSongSelect }) => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>
-        <IoMusicalNote size={14} style={{ opacity: 0.3 }} />
-        اختر أغنية
-        <IoMusicalNote size={14} style={{ opacity: 0.3 }} />
-      </h2>
+
       <div style={styles.grid}>
         {songs.map((song) => (
           <div

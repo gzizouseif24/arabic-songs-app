@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { IoArrowBack, IoSunnyOutline, IoMoonOutline, IoArrowUp, IoStar, IoMusicalNote } from 'react-icons/io5';
 
-const SongLyrics = ({ song, onBack }) => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+const SongLyrics = ({ song, onBack, isDarkMode, setIsDarkMode }) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -31,10 +30,15 @@ const SongLyrics = ({ song, onBack }) => {
       position: 'sticky',
       top: 0,
       backgroundColor: isDarkMode ? '#0a0a0a' : '#fafafa',
-      zIndex: 10,
+      zIndex: 1000,
       paddingTop: '10px',
       paddingBottom: '15px',
       borderBottom: `1px solid ${isDarkMode ? '#333' : '#e0e0e0'}`,
+      boxShadow: `0 2px 8px ${isDarkMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.1)'}`,
+      backdropFilter: 'blur(10px)',
+      WebkitBackdropFilter: 'blur(10px)',
+      margin: '0 -10px',
+      padding: '10px 20px 15px 20px',
     },
     topControls: {
       display: 'flex',
@@ -94,7 +98,7 @@ const SongLyrics = ({ song, onBack }) => {
       padding: '20px 15px',
     },
     lyricsText: {
-      fontSize: '1.4rem', // Still large for visibility
+      fontSize: '1.68rem', // Increased by 20% for better readability
       lineHeight: '2',
       textAlign: 'center',
       whiteSpace: 'pre-wrap',
