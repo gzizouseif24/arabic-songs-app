@@ -1,8 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoMusicalNote, IoPlay } from 'react-icons/io5';
 
 const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  // Handle scroll events to clear hover states during scrolling
+  useEffect(() => {
+    let scrollTimeout;
+    
+    const handleScroll = () => {
+      setIsScrolling(true);
+      setHoveredCard(null); // Clear hover state while scrolling
+      
+      // Clear scrolling state after scroll ends
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        setIsScrolling(false);
+      }, 150);
+    };
+
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
 
   const styles = {
     container: {
@@ -25,7 +51,7 @@ const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
       borderRadius: '12px',
       padding: '18px 15px',
       cursor: 'pointer',
-      transition: 'all 0.2s ease',
+      transition: 'transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)',
       minHeight: '100px',
       display: 'flex',
       flexDirection: 'column',
@@ -36,12 +62,6 @@ const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
       width: '100%',
       maxWidth: '400px',
       margin: '0 auto',
-    },
-    songCardHover: {
-      transform: 'translateY(-2px)',
-      borderColor: isDarkMode ? '#FFD700' : '#B8860B',
-      background: isDarkMode ? '#1f1f1f' : '#e8e8e8',
-      boxShadow: `0 4px 12px ${isDarkMode ? 'rgba(255, 215, 0, 0.15)' : 'rgba(184, 134, 11, 0.15)'}`,
     },
     songNumber: {
       position: 'absolute',
@@ -78,11 +98,8 @@ const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
       top: '8px',
       right: '8px',
       color: isDarkMode ? '#FFD700' : '#B8860B',
-      opacity: 0,
-      transition: 'opacity 0.2s ease',
-    },
-    playIconVisible: {
       opacity: 0.6,
+      transition: 'opacity 0.2s ease',
     },
     decorativeIcon: {
       position: 'absolute',
@@ -100,10 +117,19 @@ const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
             key={song.id}
             style={{
               ...styles.songCard,
-              ...(hoveredCard === song.id ? styles.songCardHover : {})
+              transform: hoveredCard === song.id ? 'scale(1.05)' : 'scale(1)'
             }}
-            onMouseEnter={() => setHoveredCard(song.id)}
+            onMouseEnter={() => !isScrolling && setHoveredCard(song.id)}
             onMouseLeave={() => setHoveredCard(null)}
+            onTouchStart={(e) => {
+              // Only trigger if not scrolling
+              if (!isScrolling) {
+                setHoveredCard(song.id);
+              }
+            }}
+            onTouchMove={() => setHoveredCard(null)} // Clear on touch move (scrolling)
+            onTouchEnd={() => setHoveredCard(null)}
+            onTouchCancel={() => setHoveredCard(null)}
             onClick={() => onSongSelect(song)}
             role="button"
             tabIndex={0}
@@ -115,12 +141,7 @@ const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
             aria-label={`${song.title} - ${song.artist}`}
           >
             <span style={styles.songNumber}>{song.id}</span>
-            <div
-              style={{
-                ...styles.playIconContainer,
-                ...(hoveredCard === song.id ? styles.playIconVisible : {})
-              }}
-            >
+            <div style={styles.playIconContainer}>
               <IoPlay size={16} />
             </div>
             <h3 style={styles.songTitle}>{song.title}</h3>
