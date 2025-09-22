@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IoMusicalNote, IoPlay } from 'react-icons/io5';
+import Footer from './Footer';
 
 const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -109,49 +110,52 @@ const SongList = ({ songs, onSongSelect, isDarkMode, setIsDarkMode }) => {
   };
 
   return (
-    <div style={styles.container}>
-
-      <div style={styles.grid}>
-        {songs.map((song) => (
-          <div
-            key={song.id}
-            style={{
-              ...styles.songCard,
-              transform: hoveredCard === song.id ? 'scale(1.05)' : 'scale(1)'
-            }}
-            onMouseEnter={() => !isScrolling && setHoveredCard(song.id)}
-            onMouseLeave={() => setHoveredCard(null)}
-            onTouchStart={(e) => {
-              // Only trigger if not scrolling
-              if (!isScrolling) {
-                setHoveredCard(song.id);
-              }
-            }}
-            onTouchMove={() => setHoveredCard(null)} // Clear on touch move (scrolling)
-            onTouchEnd={() => setHoveredCard(null)}
-            onTouchCancel={() => setHoveredCard(null)}
-            onClick={() => onSongSelect(song)}
-            role="button"
-            tabIndex={0}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                onSongSelect(song);
-              }
-            }}
-            aria-label={`${song.title} - ${song.artist}`}
-          >
-            <span style={styles.songNumber}>{song.id}</span>
-            <div style={styles.playIconContainer}>
-              <IoPlay size={16} />
+    <div>
+      <div style={styles.container}>
+        <div style={styles.grid}>
+          {songs.map((song) => (
+            <div
+              key={song.id}
+              style={{
+                ...styles.songCard,
+                transform: hoveredCard === song.id ? 'scale(1.05)' : 'scale(1)'
+              }}
+              onMouseEnter={() => !isScrolling && setHoveredCard(song.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+              onTouchStart={(e) => {
+                // Only trigger if not scrolling
+                if (!isScrolling) {
+                  setHoveredCard(song.id);
+                }
+              }}
+              onTouchMove={() => setHoveredCard(null)} // Clear on touch move (scrolling)
+              onTouchEnd={() => setHoveredCard(null)}
+              onTouchCancel={() => setHoveredCard(null)}
+              onClick={() => onSongSelect(song)}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onSongSelect(song);
+                }
+              }}
+              aria-label={`${song.title} - ${song.artist}`}
+            >
+              <span style={styles.songNumber}>{song.id}</span>
+              <div style={styles.playIconContainer}>
+                <IoPlay size={16} />
+              </div>
+              <h3 style={styles.songTitle}>{song.title}</h3>
+              <p style={styles.artistName}>{song.artist}</p>
+              <div style={styles.decorativeIcon}>
+                <IoMusicalNote size={14} style={{ opacity: 0.3 }} />
+              </div>
             </div>
-            <h3 style={styles.songTitle}>{song.title}</h3>
-            <p style={styles.artistName}>{song.artist}</p>
-            <div style={styles.decorativeIcon}>
-              <IoMusicalNote size={14} style={{ opacity: 0.3 }} />
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+      
+      <Footer isDarkMode={isDarkMode} />
     </div>
   );
 };

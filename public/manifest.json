@@ -1,6 +1,7 @@
 {
   "short_name": "Arabic Songs",
-  "name": "Arabic Songs Collection App",
+  "name": "Arabic Songs Collection - GS Events",
+  "description": "Browse and sing along with Arabic songs at GS Events",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,11 +11,25 @@
     {
       "src": "logo_gs.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo_gs.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#0a0a0a"
+  "orientation": "portrait",
+  "theme_color": "#FFD700",
+  "background_color": "#0a0a0a",
+  "categories": [
+    "music",
+    "entertainment"
+  ],
+  "lang": "ar",
+  "dir": "rtl"
 }
