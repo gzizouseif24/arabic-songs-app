@@ -97,27 +97,27 @@ function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [currentView]);
+  }, [currentView, savedScrollPosition]);
 
   const handleSongSelect = (song) => {
     // Save current scroll position before leaving the list
     const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
     setSavedScrollPosition(currentScrollPosition);
-    
+
     setSelectedSong(song);
     setCurrentView('lyrics');
-    
+
     // Add to browser history with saved scroll position
     window.history.pushState(
-      { 
-        view: 'lyrics', 
+      {
+        view: 'lyrics',
         song: song,
-        scrollPosition: currentScrollPosition 
-      }, 
-      '', 
+        scrollPosition: currentScrollPosition
+      },
+      '',
       `/song/${song.id}`
     );
-    
+
     // Scroll to top when entering lyrics page
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -125,7 +125,7 @@ function App() {
   const handleBackToList = () => {
     setCurrentView('list');
     setSelectedSong(null);
-    
+
     // Use browser back instead of direct navigation
     // This ensures the history stack is correct
     if (window.history.length > 1) {
@@ -137,7 +137,7 @@ function App() {
         window.scrollTo({ top: savedScrollPosition, behavior: 'smooth' });
       }, 100);
     }
-    
+
     // Note: Scroll position restoration is handled in handlePopState
   };
 
@@ -179,9 +179,9 @@ function App() {
     <div className={`App ${isDarkMode ? 'app-dark' : 'app-light'}`} dir="rtl">
       <header className={`app-header ${isDarkMode ? 'app-header-dark' : 'app-header-light'}`}>
         <div className="header-content">
-          <img 
-            src="/logo_gs.png" 
-            alt="GS Events Logo" 
+          <img
+            src="/logo_gs.png"
+            alt="GS Events Logo"
             className="header-logo"
           />
         </div>
@@ -189,24 +189,24 @@ function App() {
 
       <main className="app-main">
         {currentView === 'list' ? (
-          <SongList 
-            songs={songs} 
+          <SongList
+            songs={songs}
             onSongSelect={handleSongSelect}
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode}
           />
         ) : (
-          <SongLyrics 
-            song={selectedSong} 
+          <SongLyrics
+            song={selectedSong}
             onBack={handleBackToList}
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode}
           />
         )}
       </main>
-      
+
       {showInstallPrompt && (
-        <InstallPrompt 
+        <InstallPrompt
           onInstall={handleInstallClick}
           onDismiss={handleInstallDismiss}
           isDarkMode={isDarkMode}

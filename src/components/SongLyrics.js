@@ -4,6 +4,7 @@ import { IoArrowBack, IoSunnyOutline, IoMoonOutline, IoArrowUp, IoStar, IoMusica
 const SongLyrics = ({ song, onBack, isDarkMode, setIsDarkMode }) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [fontSize, setFontSize] = useState('medium');
+  // eslint-disable-next-line no-unused-vars
   const [wakeLock, setWakeLock] = useState(null);
 
   // Load font size preference from localStorage
